@@ -2,29 +2,37 @@
 
 namespace App\Http\Requests;
 
+use App\DormitoryBooking;
+use Gate;
 use Illuminate\Foundation\Http\FormRequest;
+use Symfony\Component\HttpFoundation\Response;
 
 class StoreDormitoryBookingRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
-        return false;
+        abort_if(Gate::denies('dormitory_booking_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
-            //
+            'accom_id'        => [
+                'required',
+                'integer'],
+            'duration_months' => [
+                'required'],
+            'move_in'         => [
+                'required',
+                'date_format:' . config('panel.date_format')],
+            'room_charge'     => [
+                'required'],
+            'total_charge'    => [
+                'required'],
+            'booking_status'  => [
+                'required'],
         ];
     }
 }
