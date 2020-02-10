@@ -32,6 +32,11 @@ class AccommodationApiController extends Controller
 
         if ($request->input('photo', false)) {
             $accommodation->addMedia(storage_path('tmp/uploads/' . $request->input('photo')))->toMediaCollection('photo');
+        } else {
+            //try photo upload
+            foreach ($request->input('document', []) as $file) {
+                $project->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('photo');
+            }
         }
 
         return (new AccommodationResource($accommodation))
@@ -73,5 +78,26 @@ class AccommodationApiController extends Controller
         $accommodation->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    //trial for storing images
+    public function storeMedia(Request $request)
+    {
+        $path = storage_path('tmp/uploads');
+
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
+        $file = $request->file('file');
+
+        $name = uniqid() . '_' . trim($file->getClientOriginalName());
+
+        $file->move($path, $name);
+
+        return response()->json([
+            'name'          => $name,
+            'original_name' => $file->getClientOriginalName(),
+        ]);
     }
 }
