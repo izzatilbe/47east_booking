@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 //use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 //use Spatie\MediaLibrary\Models\Media;
 
-class AccomCategory extends Model implements HasMedia
+class AccomCategory extends Model
 {
     use SoftDeletes;
 /*
