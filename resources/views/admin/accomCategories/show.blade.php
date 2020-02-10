@@ -31,26 +31,6 @@
                             {{ $accomCategory->name }}
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.accomCategory.fields.description') }}
-                        </th>
-                        <td>
-                            {{ $accomCategory->description }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.accomCategory.fields.photo') }}
-                        </th>
-                        <td>
-                            @if($accomCategory->photo)
-                                <a href="{{ $accomCategory->photo->getUrl() }}" target="_blank">
-                                    <img src="{{ $accomCategory->photo->getUrl('thumb') }}" width="50px" height="50px">
-                                </a>
-                            @endif
-                        </td>
-                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

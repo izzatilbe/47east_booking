@@ -31,26 +31,6 @@
                             {{ $venueAmenity->name }}
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.venueAmenity.fields.description') }}
-                        </th>
-                        <td>
-                            {{ $venueAmenity->description }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.venueAmenity.fields.photo') }}
-                        </th>
-                        <td>
-                            @if($venueAmenity->photo)
-                                <a href="{{ $venueAmenity->photo->getUrl() }}" target="_blank">
-                                    <img src="{{ $venueAmenity->photo->getUrl('thumb') }}" width="50px" height="50px">
-                                </a>
-                            @endif
-                        </td>
-                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

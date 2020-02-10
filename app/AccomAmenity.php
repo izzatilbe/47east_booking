@@ -4,19 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\Models\Media;
 
-class AccomAmenity extends Model implements HasMedia
+class AccomAmenity extends Model
 {
-    use SoftDeletes, HasMediaTrait;
+    use SoftDeletes;
 
     public $table = 'accom_amenities';
-
-    protected $appends = [
-        'photo',
-    ];
 
     protected $dates = [
         'created_at',
@@ -29,28 +22,10 @@ class AccomAmenity extends Model implements HasMedia
         'created_at',
         'updated_at',
         'deleted_at',
-        'description',
     ];
-
-    public function registerMediaConversions(Media $media = null)
-    {
-        $this->addMediaConversion('thumb')->width(50)->height(50);
-    }
 
     public function amenityAccommodations()
     {
         return $this->belongsToMany(Accommodation::class);
-    }
-
-    public function getPhotoAttribute()
-    {
-        $file = $this->getMedia('photo')->last();
-
-        if ($file) {
-            $file->url       = $file->getUrl();
-            $file->thumbnail = $file->getUrl('thumb');
-        }
-
-        return $file;
     }
 }

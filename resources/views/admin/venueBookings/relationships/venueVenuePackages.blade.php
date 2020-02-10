@@ -1,37 +1,52 @@
 <div class="m-3">
-    @can('venue_package_create')
+    @can('venue_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
-                <a class="btn btn-success" href="{{ route("admin.venue-packages.create") }}">
-                    {{ trans('global.add') }} {{ trans('cruds.venuePackage.title_singular') }}
+                <a class="btn btn-success" href="{{ route("admin.venues.create") }}">
+                    {{ trans('global.add') }} {{ trans('cruds.venue.title_singular') }}
                 </a>
             </div>
         </div>
     @endcan
     <div class="card">
         <div class="card-header">
-            {{ trans('cruds.venuePackage.title_singular') }} {{ trans('global.list') }}
+            {{ trans('cruds.venue.title_singular') }} {{ trans('global.list') }}
         </div>
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class=" table table-bordered table-striped table-hover datatable datatable-VenuePackage">
+                <table class=" table table-bordered table-striped table-hover datatable datatable-Venue">
                     <thead>
                         <tr>
                             <th width="10">
 
                             </th>
                             <th>
-                                {{ trans('cruds.venuePackage.fields.id') }}
+                                {{ trans('cruds.venue.fields.id') }}
                             </th>
                             <th>
-                                {{ trans('cruds.venuePackage.fields.accom') }}
+                                {{ trans('cruds.venue.fields.name') }}
                             </th>
                             <th>
-                                {{ trans('cruds.venuePackage.fields.venue') }}
+                                {{ trans('cruds.venue.fields.category') }}
                             </th>
                             <th>
-                                {{ trans('cruds.venuePackage.fields.total_package_charge') }}
+                                {{ trans('cruds.venue.fields.tag') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.venue.fields.description') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.venue.fields.capacity') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.venue.fields.amenity') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.venue.fields.price') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.venue.fields.photo') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -39,42 +54,63 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($venuePackages as $key => $venuePackage)
-                            <tr data-entry-id="{{ $venuePackage->id }}">
+                        @foreach($venues as $key => $venue)
+                            <tr data-entry-id="{{ $venue->id }}">
                                 <td>
 
                                 </td>
                                 <td>
-                                    {{ $venuePackage->id ?? '' }}
+                                    {{ $venue->id ?? '' }}
                                 </td>
                                 <td>
-                                    @foreach($venuePackage->accoms as $key => $item)
-                                        <span class="badge badge-info">{{ $item->total_charge }}</span>
+                                    {{ $venue->name ?? '' }}
+                                </td>
+                                <td>
+                                    @foreach($venue->categories as $key => $item)
+                                        <span class="badge badge-info">{{ $item->name }}</span>
                                     @endforeach
                                 </td>
                                 <td>
-                                    @foreach($venuePackage->venues as $key => $item)
-                                        <span class="badge badge-info">{{ $item->room_charge }}</span>
+                                    @foreach($venue->tags as $key => $item)
+                                        <span class="badge badge-info">{{ $item->name }}</span>
                                     @endforeach
                                 </td>
                                 <td>
-                                    {{ $venuePackage->total_package_charge ?? '' }}
+                                    {{ $venue->description ?? '' }}
                                 </td>
                                 <td>
-                                    @can('venue_package_show')
-                                        <a class="btn btn-xs btn-primary" href="{{ route('admin.venue-packages.show', $venuePackage->id) }}">
+                                    {{ $venue->capacity ?? '' }}
+                                </td>
+                                <td>
+                                    @foreach($venue->amenities as $key => $item)
+                                        <span class="badge badge-info">{{ $item->name }}</span>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    {{ $venue->price ?? '' }}
+                                </td>
+                                <td>
+                                    @foreach($venue->photo as $key => $media)
+                                        <a href="{{ $media->getUrl() }}" target="_blank">
+                                            <img src="{{ $media->getUrl('thumb') }}" width="50px" height="50px">
+                                        </a>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @can('venue_show')
+                                        <a class="btn btn-xs btn-primary" href="{{ route('admin.venues.show', $venue->id) }}">
                                             {{ trans('global.view') }}
                                         </a>
                                     @endcan
 
-                                    @can('venue_package_edit')
-                                        <a class="btn btn-xs btn-info" href="{{ route('admin.venue-packages.edit', $venuePackage->id) }}">
+                                    @can('venue_edit')
+                                        <a class="btn btn-xs btn-info" href="{{ route('admin.venues.edit', $venue->id) }}">
                                             {{ trans('global.edit') }}
                                         </a>
                                     @endcan
 
-                                    @can('venue_package_delete')
-                                        <form action="{{ route('admin.venue-packages.destroy', $venuePackage->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    @can('venue_delete')
+                                        <form action="{{ route('admin.venues.destroy', $venue->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -96,11 +132,11 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('venue_package_delete')
+@can('venue_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.venue-packages.massDestroy') }}",
+    url: "{{ route('admin.venues.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -130,7 +166,7 @@
     order: [[ 1, 'desc' ]],
     pageLength: 100,
   });
-  $('.datatable-VenuePackage:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  $('.datatable-Venue:not(.ajaxTable)').DataTable({ buttons: dtButtons })
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
         $($.fn.dataTable.tables(true)).DataTable()
             .columns.adjust();

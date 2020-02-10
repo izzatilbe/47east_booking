@@ -4,17 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\Models\Media;
 
-class VenueCategory extends Model implements HasMedia
+class VenueCategory extends Model
 {
-    use SoftDeletes, HasMediaTrait;
-
-    protected $appends = [
-        'photo',
-    ];
+    use SoftDeletes;
 
     public $table = 'venue_categories';
 
@@ -29,28 +22,10 @@ class VenueCategory extends Model implements HasMedia
         'created_at',
         'updated_at',
         'deleted_at',
-        'description',
     ];
-
-    public function registerMediaConversions(Media $media = null)
-    {
-        $this->addMediaConversion('thumb')->width(50)->height(50);
-    }
 
     public function categoryVenues()
     {
         return $this->belongsToMany(Venue::class);
-    }
-
-    public function getPhotoAttribute()
-    {
-        $file = $this->getMedia('photo')->last();
-
-        if ($file) {
-            $file->url       = $file->getUrl();
-            $file->thumbnail = $file->getUrl('thumb');
-        }
-
-        return $file;
     }
 }
