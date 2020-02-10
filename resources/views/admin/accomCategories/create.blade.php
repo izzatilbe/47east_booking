@@ -17,6 +17,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.accomCategory.fields.name_helper') }}</span>
             </div>
+<!--
             <div class="form-group">
                 <label for="description">{{ trans('cruds.accomCategory.fields.description') }}</label>
                 <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{{ old('description') }}</textarea>
@@ -34,6 +35,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.accomCategory.fields.photo_helper') }}</span>
             </div>
+-->
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

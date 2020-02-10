@@ -4,18 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\Models\Media;
+//use Spatie\MediaLibrary\HasMedia\HasMedia;
+//use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+//use Spatie\MediaLibrary\Models\Media;
 
 class AccomCategory extends Model implements HasMedia
 {
-    use SoftDeletes, HasMediaTrait;
-
+    use SoftDeletes;
+/*
     protected $appends = [
         'photo',
     ];
-
+*/
     public $table = 'accom_categories';
 
     protected $dates = [
@@ -31,17 +31,17 @@ class AccomCategory extends Model implements HasMedia
         'deleted_at',
         'description',
     ];
-
+/*
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')->width(50)->height(50);
     }
-
+*/
     public function categoryAccommodations()
     {
         return $this->belongsToMany(Accommodation::class);
     }
-
+/*
     public function getPhotoAttribute()
     {
         $file = $this->getMedia('photo')->last();
@@ -53,4 +53,5 @@ class AccomCategory extends Model implements HasMedia
 
         return $file;
     }
+*/
 }

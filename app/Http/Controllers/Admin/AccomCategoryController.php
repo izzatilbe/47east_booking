@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AccomCategoryController extends Controller
 {
-    use MediaUploadingTrait;
+    //use MediaUploadingTrait;
 
     public function index()
     {
@@ -33,6 +33,7 @@ class AccomCategoryController extends Controller
         return view('admin.accomCategories.create');
     }
 
+    /*
     public function store(StoreAccomCategoryRequest $request)
     {
         $accomCategory = AccomCategory::create($request->all());
@@ -105,5 +106,51 @@ class AccomCategoryController extends Controller
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media', 'public');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+    */
+    public function store(StoreAccomCategoryRequest $request)
+    {
+        $accomCategory = AccomCategory::create($request->all());
+
+        return redirect()->route('admin.accom-categories.index');
+    }
+
+    public function edit(AccomCategory $accomCategory)
+    {
+        abort_if(Gate::denies('accom_category_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        return view('admin.accomCategories.edit', compact('accomCategory'));
+    }
+
+    public function update(UpdateAccomTagRequest $request, AccomTag $accomTag)
+    {
+        $accomCategory->update($request->all());
+
+        return redirect()->route('admin.accom-categories.index');
+    }
+
+    public function show(AccomCategory $accomCategory)
+    {
+        abort_if(Gate::denies('accom_category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $accomTag->load('categoryAccommodations');
+
+        return view('admin.accomCategories.show', compact('accomCategory'));
+    }
+
+    public function destroy(AccomCategory $accomCategory)
+    {
+        abort_if(Gate::denies('accom_category_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $accomCategory->delete();
+
+        return back();
+    }
+
+    public function massDestroy(MassDestroyAccomCategoryRequest $request)
+    {
+        AccomCategory::whereIn('id', request('ids'))->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
