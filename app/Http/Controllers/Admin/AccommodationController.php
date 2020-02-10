@@ -105,7 +105,7 @@ class AccommodationController extends Controller
     {
         abort_if(Gate::denies('accommodation_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $accommodation->load('categories', 'tags', 'amenities', 'accomDormitoryBookings', 'accomStaycationBookings', 'accomCoworkings', 'accomVenuePackages');
+        $accommodation->load('categories', 'tags', 'amenities', 'accomDormitoryBookings', 'accomStaycationBookings', 'accomVenuePackages');
 
         return view('admin.accommodations.show', compact('accommodation'));
     }

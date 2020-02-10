@@ -29,12 +29,6 @@
                             {{ trans('cruds.venueCategory.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.venueCategory.fields.description') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.venueCategory.fields.photo') }}
-                        </th>
-                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -50,16 +44,6 @@
                             </td>
                             <td>
                                 {{ $venueCategory->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $venueCategory->description ?? '' }}
-                            </td>
-                            <td>
-                                @if($venueCategory->photo)
-                                    <a href="{{ $venueCategory->photo->getUrl() }}" target="_blank">
-                                        <img src="{{ $venueCategory->photo->getUrl('thumb') }}" width="50px" height="50px">
-                                    </a>
-                                @endif
                             </td>
                             <td>
                                 @can('venue_category_show')

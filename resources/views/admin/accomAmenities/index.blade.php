@@ -29,12 +29,6 @@
                             {{ trans('cruds.accomAmenity.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.accomAmenity.fields.description') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.accomAmenity.fields.photo') }}
-                        </th>
-                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -50,16 +44,6 @@
                             </td>
                             <td>
                                 {{ $accomAmenity->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $accomAmenity->description ?? '' }}
-                            </td>
-                            <td>
-                                @if($accomAmenity->photo)
-                                    <a href="{{ $accomAmenity->photo->getUrl() }}" target="_blank">
-                                        <img src="{{ $accomAmenity->photo->getUrl('thumb') }}" width="50px" height="50px">
-                                    </a>
-                                @endif
                             </td>
                             <td>
                                 @can('accom_amenity_show')

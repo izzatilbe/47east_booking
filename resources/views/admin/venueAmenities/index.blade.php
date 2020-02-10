@@ -29,12 +29,6 @@
                             {{ trans('cruds.venueAmenity.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.venueAmenity.fields.description') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.venueAmenity.fields.photo') }}
-                        </th>
-                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -50,16 +44,6 @@
                             </td>
                             <td>
                                 {{ $venueAmenity->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $venueAmenity->description ?? '' }}
-                            </td>
-                            <td>
-                                @if($venueAmenity->photo)
-                                    <a href="{{ $venueAmenity->photo->getUrl() }}" target="_blank">
-                                        <img src="{{ $venueAmenity->photo->getUrl('thumb') }}" width="50px" height="50px">
-                                    </a>
-                                @endif
                             </td>
                             <td>
                                 @can('venue_amenity_show')
