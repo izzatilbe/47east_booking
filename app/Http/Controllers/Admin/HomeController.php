@@ -8,6 +8,7 @@ class HomeController
 {
     public function index()
     {
+        /*
         $settings1 = [
             'chart_title'           => 'Dormitory Bookings',
             'chart_type'            => 'number_block',
@@ -323,5 +324,8 @@ class HomeController
         }
 
         return view('home', compact('settings1', 'settings2', 'settings3', 'settings4', 'settings5', 'settings6', 'settings7', 'settings8'));
+        */
+        return view('hometemp');
     }
+    
 }

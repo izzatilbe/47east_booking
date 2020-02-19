@@ -28,11 +28,13 @@ class StaycationBookingController extends Controller
     {
         abort_if(Gate::denies('staycation_booking_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $booked_bies = Customer::all()->pluck('last_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $booked_bies = Customer::all('id', 'first_name', 'last_name', 'email');
 
         $accoms = Accommodation::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        
+        $price_list = Accommodation::all()->pluck('price', 'id');
 
-        return view('admin.staycationBookings.create', compact('booked_bies', 'accoms'));
+        return view('admin.staycationBookings.create', compact('booked_bies', 'accoms', 'price_list'));
     }
 
     public function store(StoreStaycationBookingRequest $request)

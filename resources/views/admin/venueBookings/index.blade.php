@@ -1,32 +1,59 @@
 @extends('layouts.admin')
 @section('content')
-@can('venue_category_create')
+@can('venue_booking_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route("admin.venue-categories.create") }}">
-                {{ trans('global.add') }} {{ trans('cruds.venueCategory.title_singular') }}
+            <a class="btn btn-success" href="{{ route("admin.venue-bookings.create") }}">
+                {{ trans('global.add') }} {{ trans('cruds.venueBooking.title_singular') }}
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.venueCategory.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.venueBooking.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-VenueCategory">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-VenueBooking">
                 <thead>
                     <tr>
                         <th width="10">
 
                         </th>
                         <th>
-                            {{ trans('cruds.venueCategory.fields.id') }}
+                            {{ trans('cruds.venueBooking.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.venueCategory.fields.name') }}
+                            {{ trans('cruds.venueBooking.fields.booked_by') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.customer.fields.first_name') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.venueBooking.fields.datetime_start') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.venueBooking.fields.datetime_end') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.venueBooking.fields.duration') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.venueBooking.fields.room_charge') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.venueBooking.fields.misc_charge') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.venueBooking.fields.total_charge') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.venueBooking.fields.payment_type') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.venueBooking.fields.booking_status') }}
                         </th>
                         <th>
                             &nbsp;
@@ -34,32 +61,59 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($venueCategories as $key => $venueCategory)
-                        <tr data-entry-id="{{ $venueCategory->id }}">
+                    @foreach($venueBookings as $key => $venueBooking)
+                        <tr data-entry-id="{{ $venueBooking->id }}">
                             <td>
 
                             </td>
                             <td>
-                                {{ $venueCategory->id ?? '' }}
+                                {{ $venueBooking->id ?? '' }}
                             </td>
                             <td>
-                                {{ $venueCategory->name ?? '' }}
+                                {{ $venueBooking->booked_by->last_name ?? '' }}
                             </td>
                             <td>
-                                @can('venue_category_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.venue-categories.show', $venueCategory->id) }}">
+                                {{ $venueBooking->booked_by->first_name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $venueBooking->datetime_start ?? '' }}
+                            </td>
+                            <td>
+                                {{ $venueBooking->datetime_end ?? '' }}
+                            </td>
+                            <td>
+                                {{ $venueBooking->duration ?? '' }}
+                            </td>
+                            <td>
+                                {{ $venueBooking->room_charge ?? '' }}
+                            </td>
+                            <td>
+                                {{ $venueBooking->misc_charge ?? '' }}
+                            </td>
+                            <td>
+                                {{ $venueBooking->total_charge ?? '' }}
+                            </td>
+                            <td>
+                                {{ App\VenueBooking::PAYMENT_TYPE_RADIO[$venueBooking->payment_type] ?? '' }}
+                            </td>
+                            <td>
+                                {{ App\VenueBooking::BOOKING_STATUS_RADIO[$venueBooking->booking_status] ?? '' }}
+                            </td>
+                            <td>
+                                @can('venue_booking_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.venue-bookings.show', $venueBooking->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
 
-                                @can('venue_category_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.venue-categories.edit', $venueCategory->id) }}">
+                                @can('venue_booking_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.venue-bookings.edit', $venueBooking->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
 
-                                @can('venue_category_delete')
-                                    <form action="{{ route('admin.venue-categories.destroy', $venueCategory->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                @can('venue_booking_delete')
+                                    <form action="{{ route('admin.venue-bookings.destroy', $venueBooking->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -84,11 +138,11 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('venue_category_delete')
+@can('venue_booking_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.venue-categories.massDestroy') }}",
+    url: "{{ route('admin.venue-bookings.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -118,7 +172,7 @@
     order: [[ 1, 'desc' ]],
     pageLength: 100,
   });
-  $('.datatable-VenueCategory:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  $('.datatable-VenueBooking:not(.ajaxTable)').DataTable({ buttons: dtButtons })
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
         $($.fn.dataTable.tables(true)).DataTable()
             .columns.adjust();

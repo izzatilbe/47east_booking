@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Notification;
 
 class StaycationBookingActionObserver
 {
+    /*
     public function created(StaycationBooking $model)
     {
         $data  = ['action' => 'created', 'model_name' => 'StaycationBooking'];
@@ -34,4 +35,5 @@ class StaycationBookingActionObserver
         })->get();
         Notification::send($users, new DataChangeEmailNotification($data));
     }
+    */
 }

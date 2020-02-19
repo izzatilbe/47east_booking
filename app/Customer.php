@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Customer extends Model
 {
-    /*
     use SoftDeletes, Auditable;
 
     public $table = 'customers';
@@ -52,5 +51,4 @@ class Customer extends Model
     {
         return $this->hasMany(Coworking::class, 'booked_by_id', 'id');
     }
-    */
 }

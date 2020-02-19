@@ -71,7 +71,7 @@ class StaycationBooking extends Model
     {
         return $this->belongsTo(Accommodation::class, 'accom_id');
     }
-
+    
     public function getCheckInAttribute($value)
     {
         return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;

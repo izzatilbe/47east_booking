@@ -21,6 +21,16 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route("admin.systemCalendar") }}" class="nav-link {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'active' : '' }}">
+                        <i class="fas fa-fw fa-calendar">
+
+                        </i>
+                        <p>
+                            <span>{{ trans('global.systemCalendar') }}</span>
+                        </p>
+                    </a>
+                </li>
                 @can('user_management_access')
                     <li class="nav-item has-treeview {{ request()->is('admin/permissions*') ? 'menu-open' : '' }} {{ request()->is('admin/roles*') ? 'menu-open' : '' }} {{ request()->is('admin/users*') ? 'menu-open' : '' }} {{ request()->is('admin/business-units*') ? 'menu-open' : '' }} {{ request()->is('admin/employees*') ? 'menu-open' : '' }} {{ request()->is('admin/customers*') ? 'menu-open' : '' }} {{ request()->is('admin/audit-logs*') ? 'menu-open' : '' }}">
                         <a class="nav-link nav-dropdown-toggle" href="#">
@@ -321,91 +331,6 @@
                         </ul>
                     </li>
                 @endcan
-                @can('expense_management_access')
-                    <li class="nav-item has-treeview {{ request()->is('admin/expense-categories*') ? 'menu-open' : '' }} {{ request()->is('admin/income-categories*') ? 'menu-open' : '' }} {{ request()->is('admin/expenses*') ? 'menu-open' : '' }} {{ request()->is('admin/incomes*') ? 'menu-open' : '' }} {{ request()->is('admin/expense-reports*') ? 'menu-open' : '' }}">
-                        <a class="nav-link nav-dropdown-toggle" href="#">
-                            <i class="fa-fw fas fa-money-bill">
-
-                            </i>
-                            <p>
-                                <span>{{ trans('cruds.expenseManagement.title') }}</span>
-                                <i class="right fa fa-fw fa-angle-left"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            @can('expense_category_access')
-                                <li class="nav-item">
-                                    <a href="{{ route("admin.expense-categories.index") }}" class="nav-link {{ request()->is('admin/expense-categories') || request()->is('admin/expense-categories/*') ? 'active' : '' }}">
-                                        <i class="fa-fw fas fa-list">
-
-                                        </i>
-                                        <p>
-                                            <span>{{ trans('cruds.expenseCategory.title') }}</span>
-                                        </p>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('income_category_access')
-                                <li class="nav-item">
-                                    <a href="{{ route("admin.income-categories.index") }}" class="nav-link {{ request()->is('admin/income-categories') || request()->is('admin/income-categories/*') ? 'active' : '' }}">
-                                        <i class="fa-fw fas fa-list">
-
-                                        </i>
-                                        <p>
-                                            <span>{{ trans('cruds.incomeCategory.title') }}</span>
-                                        </p>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('expense_access')
-                                <li class="nav-item">
-                                    <a href="{{ route("admin.expenses.index") }}" class="nav-link {{ request()->is('admin/expenses') || request()->is('admin/expenses/*') ? 'active' : '' }}">
-                                        <i class="fa-fw fas fa-arrow-circle-right">
-
-                                        </i>
-                                        <p>
-                                            <span>{{ trans('cruds.expense.title') }}</span>
-                                        </p>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('income_access')
-                                <li class="nav-item">
-                                    <a href="{{ route("admin.incomes.index") }}" class="nav-link {{ request()->is('admin/incomes') || request()->is('admin/incomes/*') ? 'active' : '' }}">
-                                        <i class="fa-fw fas fa-arrow-circle-right">
-
-                                        </i>
-                                        <p>
-                                            <span>{{ trans('cruds.income.title') }}</span>
-                                        </p>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('expense_report_access')
-                                <li class="nav-item">
-                                    <a href="{{ route("admin.expense-reports.index") }}" class="nav-link {{ request()->is('admin/expense-reports') || request()->is('admin/expense-reports/*') ? 'active' : '' }}">
-                                        <i class="fa-fw fas fa-chart-line">
-
-                                        </i>
-                                        <p>
-                                            <span>{{ trans('cruds.expenseReport.title') }}</span>
-                                        </p>
-                                    </a>
-                                </li>
-                            @endcan
-                        </ul>
-                    </li>
-                @endcan
-                <li class="nav-item">
-                    <a href="{{ route("admin.systemCalendar") }}" class="nav-link {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'active' : '' }}">
-                        <i class="fas fa-fw fa-calendar">
-
-                        </i>
-                        <p>
-                            <span>{{ trans('global.systemCalendar') }}</span>
-                        </p>
-                    </a>
-                </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                         <p>
